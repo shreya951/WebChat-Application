@@ -1,0 +1,18 @@
+Language Familiarity:
+ - I reviewed the fundamentals of C and C++, which included basic syntax, 
+   if statements, loops, input/output handling, and functions, to ensure that I can
+   easily write code before I begin working on this project.
+Online Communication:
+  - I focused on how users connect to servers in order to properly
+    process chat applications, and looked into how clients can communicate with
+    other clients. I ended up choosing a client-server model for the purposes
+    of this project, since it is more of an introductory level project.
+TCP Sockets:
+  - I learned that TCP, which is the Transmission Control Protocol, 
+    ensures that two machines, which use an IP address and a port number can
+    effectively communicate, since sockets are the endpoints when two machines
+    attempt to communicate.
+  - I learned some basic socket operations such as socket() to create a socket, and
+    listen() to look out for incoming connections, accept() to accept a connection, 
+    and close() to close a connection. I will continue learning the commands so I can
+    complete the project with ease.
