@@ -1,10 +1,6 @@
 import socket
 import threading
 
-# -----------------------------------
-# SERVER SETTINGS
-# -----------------------------------
-
 HOST = "0.0.0.0"
 PORT = 5555
 
@@ -14,16 +10,13 @@ connected_clients = []
 # Store usernames
 client_names = {}
 
-# -----------------------------------
-# SEND MESSAGE TO EVERYONE
-# -----------------------------------
 
 def broadcast_message(message, sender_socket):
 
     # Loop through every connected client
     for client_socket in connected_clients:
 
-        # Do NOT send message back to sender
+        # Ensure not to send message back to sender
         if client_socket != sender_socket:
 
             try:
@@ -33,24 +26,21 @@ def broadcast_message(message, sender_socket):
                 # Remove broken client connection
                 connected_clients.remove(client_socket)
 
-# -----------------------------------
-# HANDLE ONE CLIENT
-# -----------------------------------
 
 def handle_client(client_socket, client_address):
 
     print(f"\n[NEW CONNECTION] {client_address}")
 
     try:
-        # First message from client is username
+        # Get the first message from the client -> their username
         username = client_socket.recv(1024).decode("utf-8")
 
-        # Save username
+        # Save the username
         client_names[client_socket] = username
 
         print(f"[USERNAME] {client_address} is '{username}'")
 
-        # Tell everyone user joined
+        # Tell everyone the user joined
         join_message = f"\n[SERVER] {username} joined the chat!"
         broadcast_message(join_message.encode("utf-8"), client_socket)
 
@@ -58,7 +48,7 @@ def handle_client(client_socket, client_address):
         print("[ERROR] Could not get username")
         return
 
-    # Keep listening for messages
+    # Keep listening for some messages
     while True:
 
         try:
@@ -69,7 +59,7 @@ def handle_client(client_socket, client_address):
             if not message:
                 break
 
-            # Decode message into readable text
+            # Decode message into text
             decoded_message = message.decode("utf-8")
 
             print(f"[{username}] {decoded_message}")
@@ -86,9 +76,6 @@ def handle_client(client_socket, client_address):
         except:
             break
 
-    # -----------------------------------
-    # CLIENT DISCONNECTED
-    # -----------------------------------
 
     print(f"[DISCONNECTED] {username}")
 
@@ -103,9 +90,6 @@ def handle_client(client_socket, client_address):
 
     client_socket.close()
 
-# -----------------------------------
-# START SERVER
-# -----------------------------------
 
 def start_server():
 
@@ -124,7 +108,7 @@ def start_server():
     print(f"[SERVER STARTED]")
     print(f"Listening on {HOST}:{PORT}\n")
 
-    # Server runs forever
+    # Starts to accept new clients
     while True:
 
         # Accept new client
@@ -135,18 +119,14 @@ def start_server():
 
         print(f"[ACTIVE CLIENTS] {len(connected_clients)}")
 
-        # Create thread for this client
+        # Create the thread for this client
         client_thread = threading.Thread(
             target=handle_client,
             args=(client_socket, client_address)
         )
 
-        # Start thread
+        # Start the thread
         client_thread.start()
-
-# -----------------------------------
-# RUN SERVER
-# -----------------------------------
 
 if __name__ == "__main__":
     start_server()

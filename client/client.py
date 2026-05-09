@@ -1,16 +1,10 @@
 import socket
 import threading
 
-# -----------------------------------
-# SERVER CONNECTION SETTINGS
-# -----------------------------------
 
 HOST = "127.0.0.1"
 PORT = 5555
 
-# -----------------------------------
-# RECEIVE MESSAGES FROM SERVER
-# -----------------------------------
 
 def receive_messages(client_socket):
 
@@ -31,9 +25,6 @@ def receive_messages(client_socket):
             client_socket.close()
             break
 
-# -----------------------------------
-# SEND MESSAGES TO SERVER
-# -----------------------------------
 
 def send_messages(client_socket):
 
@@ -49,9 +40,6 @@ def send_messages(client_socket):
         except:
             break
 
-# -----------------------------------
-# START CLIENT
-# -----------------------------------
 
 def start_client():
 
@@ -71,7 +59,7 @@ def start_client():
         print("[ERROR] Could not connect")
         return
 
-    # Ask user for username
+    # Asks the user for their username
     username = input("Enter your username: ")
 
     # Send username to server
@@ -89,13 +77,10 @@ def start_client():
         args=(client_socket,)
     )
 
-    # Start both threads
+    # Start both of the threads
     receive_thread.start()
     send_thread.start()
 
-# -----------------------------------
-# RUN CLIENT
-# -----------------------------------
 
 if __name__ == "__main__":
     start_client()
